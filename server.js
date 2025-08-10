@@ -26,15 +26,20 @@ app.get('/review/:id', (req, res) => {
 
 // API routes
 const authRoutes = require('./routes/authRoutes');
+const homeRoutes = require("./routes/homeRoutes");
 const reviewRoutes = require('./routes/reviewRoutes');
 const referralRoutes = require('./routes/referralRoutes');
 const businessRoutes = require('./routes/businessRoutes');
+const cmsRoutes = require('./routes/cmsRoutes');
+const seedRoutes = require('./routes/seed');
 
 app.use('/api/auth', authRoutes);
+app.use("/api/home", homeRoutes);
 app.use('/api/review', reviewRoutes);
 app.use('/api/referral', referralRoutes);
 app.use('/api/business', businessRoutes);
-
+app.use('/api/cms', cmsRoutes);
+app.use('/api', seedRoutes);
 // optional: health check
 app.get('/health', (req, res) => res.json({ ok: true }));
 

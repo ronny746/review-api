@@ -1,26 +1,32 @@
 const Review = require('../models/Review');
 const mongoose = require('mongoose');
+const { sendSuccess, sendError } = require('../utils/response');
 
 exports.addReview = async (req, res) => {
   try {
-    const {businessId, name, mobile, comment, location, rating} = req.body;
-    if (!businessId || !rating) return res.status(400).json({error: 'Business and rating required'});
+    const { businessId, name, mobile, comment, location, rating } = req.body;
 
-    const review = new Review({businessId, name, mobile, comment, location, rating});
+    if (!businessId || !rating) {
+      return sendError(res, 'Business and rating are required', null, 400);
+    }
+
+    const review = new Review({ businessId, name, mobile, comment, location, rating });
     await review.save();
-    res.json({message: 'Review added'});
+
+    sendSuccess(res, 'Review added successfully', review, 201);
   } catch (error) {
-    res.status(500).json({error: error.message});
+    sendError(res, 'Error adding review', error.message, 500);
   }
 };
 
 exports.getReviewsByBusiness = async (req, res) => {
   try {
     const businessId = req.userId;
-    const reviews = await Review.find({businessId});
-    res.json(reviews);
+    const reviews = await Review.find({ businessId });
+
+    sendSuccess(res, 'Reviews fetched successfully', reviews, 200);
   } catch (error) {
-    res.status(500).json({error: error.message});
+    sendError(res, 'Error fetching reviews', error.message, 500);
   }
 };
 
@@ -51,32 +57,26 @@ exports.getReviewStats = async (req, res) => {
       { $sort: { "_id.year": 1, "_id.month": 1 } }
     ]);
 
-    res.json({ totalReviews, monthlyStats });
+    sendSuccess(res, 'Review stats fetched successfully', { totalReviews, monthlyStats }, 200);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    sendError(res, 'Error fetching review stats', error.message, 500);
   }
 };
-
-
 
 exports.getDailyGrowthWithStats = async (req, res) => {
   try {
     const businessId = req.userId;
-
     const daysBack = 30;
 
-    // Start date 30 days ago at midnight local time
     const startDate = new Date();
     startDate.setHours(0, 0, 0, 0);
     startDate.setDate(startDate.getDate() - daysBack);
 
-    // Tomorrow at midnight (end range for today)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
-    // Aggregate reviews grouped by date string in local timezone (Asia/Kolkata)
     const dailyData = await Review.aggregate([
       {
         $match: {
@@ -90,7 +90,7 @@ exports.getDailyGrowthWithStats = async (req, res) => {
             $dateToString: {
               format: "%Y-%m-%d",
               date: "$createdAt",
-              timezone: "Asia/Kolkata" // set your timezone here
+              timezone: "Asia/Kolkata"
             }
           },
           count: { $sum: 1 }
@@ -99,7 +99,6 @@ exports.getDailyGrowthWithStats = async (req, res) => {
       { $sort: { "_id": 1 } }
     ]);
 
-    // Fill missing dates with zero count and calculate growth %
     const result = [];
     let totalReviews = 0;
     let prevCount = 0;
@@ -118,7 +117,6 @@ exports.getDailyGrowthWithStats = async (req, res) => {
       const dayRecord = dailyData.find(d => d._id === dateString);
       const count = dayRecord ? dayRecord.count : 0;
 
-      // Calculate growth %
       let growth = null;
       if (i > 0) {
         if (prevCount === 0 && count > 0) growth = 100;
@@ -152,7 +150,7 @@ exports.getDailyGrowthWithStats = async (req, res) => {
 
     const averageGrowthPercent = growthDays > 0 ? Number((growthSum / growthDays).toFixed(2)) : 0;
 
-    res.json({
+    sendSuccess(res, 'Daily growth stats fetched successfully', {
       summary: {
         totalReviews,
         averageDailyGrowthPercent: averageGrowthPercent,
@@ -160,8 +158,8 @@ exports.getDailyGrowthWithStats = async (req, res) => {
         worstDay: { date: worstDay, reviews: minReviews }
       },
       dailyData: result
-    });
+    }, 200);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    sendError(res, 'Error fetching daily growth stats', error.message, 500);
   }
 };
