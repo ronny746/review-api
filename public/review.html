@@ -1,932 +1,871 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Write a Review</title>
-  <style>
-    :root{
-      --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --card: #ffffff;
-      --card-secondary: #f8fafc;
-      --text-primary: #1a202c;
-      --text-secondary: #4a5568;
-      --text-muted: #718096;
-      --accent: #4f46e5;
-      --accent-hover: #4338ca;
-      --success: #10b981;
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --border: #e2e8f0;
-      --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-      --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      --radius: 16px;
-      --radius-sm: 8px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="format-detection" content="telephone=no">
+    <title>Share Your Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    * {
-      box-sizing: border-box;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
 
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg);
-      overflow-x: hidden;
-    }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
 
-    .container {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      position: relative;
-    }
+        .loading-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
 
-    .container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle fill="%23ffffff" fill-opacity="0.1" cx="30" cy="30" r="2"/></g></svg>');
-      opacity: 0.3;
-    }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
 
-    .review-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-lg);
-      padding: 32px;
-      max-width: 600px;
-      width: 100%;
-      position: relative;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    .business-header {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      margin-bottom: 32px;
-      padding-bottom: 24px;
-      border-bottom: 2px solid var(--card-secondary);
-    }
+        .loading-text {
+            color: #6b7280;
+            font-size: 16px;
+        }
 
-    .business-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: white;
-      font-weight: 600;
-      box-shadow: var(--shadow);
-      position: relative;
-    }
+        .error-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
 
-    .business-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        .error-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
 
-    .business-info h1 {
-      margin: 0 0 8px 0;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1.2;
-    }
+        .error-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 10px;
+        }
 
-    .business-meta {
-      color: var(--text-secondary);
-      font-size: 14px;
-      margin-bottom: 12px;
-      font-weight: 500;
-    }
+        .error-text {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
 
-    .business-link {
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 6px 12px;
-      background: rgba(79, 70, 229, 0.1);
-      border-radius: var(--radius-sm);
-      display: inline-block;
-      transition: all 0.2s ease;
-    }
+        .retry-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
-    .business-link:hover {
-      background: rgba(79, 70, 229, 0.2);
-      transform: translateY(-1px);
-    }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    .rating-section {
-      margin-bottom: 28px;
-    }
+        .title {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
 
-    .rating-label {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 12px;
-      display: block;
-    }
+        .subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-    .stars-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
+        .business-info {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .stars {
-      display: flex;
-      gap: 4px;
-    }
+        .business-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            margin: 0 auto 15px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
 
-    .star {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
-      overflow: hidden;
-    }
+        .business-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    .star::before {
-      content: '★';
-      font-size: 24px;
-      color: #d1d5db;
-      transition: all 0.2s ease;
-    }
+        .business-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
 
-    .star.on::before {
-      color: #fbbf24;
-      transform: scale(1.1);
-    }
+        .business-location {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
 
-    .star:hover {
-      transform: scale(1.1);
-      background: rgba(251, 191, 36, 0.1);
-    }
+        .business-category {
+            font-size: 12px;
+            opacity: 0.8;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
 
-    .rating-text {
-      color: var(--text-secondary);
-      font-size: 14px;
-      font-weight: 500;
-    }
+        .rating-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    .form-group {
-      margin-bottom: 24px;
-    }
+        .rating-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 15px;
+        }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
+        .rating-instruction {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
 
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-    }
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
 
-    input, textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 16px;
-      background: var(--card);
-      color: var(--text-primary);
-      transition: all 0.2s ease;
-      outline: none;
-    }
+        .star {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            position: relative;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
 
-    input:focus, textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-      transform: translateY(-1px);
-    }
+        .star:hover,
+        .star:active {
+            transform: scale(1.1);
+            background: #fef3c7;
+            border-color: #fbbf24;
+        }
 
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-      font-family: inherit;
-    }
+        .star.selected {
+            background: #fbbf24;
+            border-color: #f59e0b;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+        }
 
-    .comment-suggestions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
+        .star::before {
+            content: '★';
+            font-size: 28px;
+            color: #d1d5db;
+            transition: color 0.3s ease;
+        }
 
-    .suggestion-chip {
-      background: var(--card-secondary);
-      border: 2px solid var(--border);
-      color: var(--text-secondary);
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-weight: 500;
-    }
+        .star.selected::before,
+        .star:hover::before {
+            color: white;
+        }
 
-    .suggestion-chip:hover {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
-    }
+        .rating-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            min-height: 24px;
+        }
 
-    .form-actions {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 2px solid var(--card-secondary);
-    }
+        .feedback-form {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
 
-    .btn {
-      padding: 14px 24px;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
+        .feedback-form.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.4);
-    }
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    .btn-primary:hover:not(:disabled) {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px 0 rgba(79, 70, 229, 0.5);
-    }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
 
-    .btn-secondary {
-      background: var(--card-secondary);
-      color: var(--text-secondary);
-      border: 2px solid var(--border);
-    }
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            background: white;
+            transition: all 0.3s ease;
+            outline: none;
+        }
 
-    .btn-secondary:hover {
-      background: var(--border);
-      transform: translateY(-1px);
-    }
+        .form-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
 
-    .btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none !important;
-    }
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
 
-    .status-indicator {
-      margin-left: auto;
-      color: var(--text-muted);
-      font-size: 14px;
-      font-weight: 500;
-    }
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
 
-    .message {
-      margin-top: 20px;
-      padding: 16px 20px;
-      border-radius: var(--radius-sm);
-      font-size: 14px;
-      font-weight: 500;
-      border: 2px solid;
-    }
+        .submit-btn:hover,
+        .submit-btn:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
 
-    .message.success {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--success);
-      border-color: rgba(16, 185, 129, 0.3);
-    }
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
 
-    .message.error {
-      background: rgba(239, 68, 68, 0.1);
-      color: var(--danger);
-      border-color: rgba(239, 68, 68, 0.3);
-    }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
 
-    .helper-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 8px;
-      font-style: italic;
-    }
+        .message {
+            margin-top: 15px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+        }
 
-    /* Mobile responsive */
-    @media (max-width: 640px) {
-      .container {
-        padding: 16px;
-      }
-      
-      .review-card {
-        padding: 24px;
-      }
-      
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-      
-      .business-header {
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .form-actions {
-        flex-direction: column;
-      }
-      
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
+        .message.success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
 
-    /* Loading animation */
-    .loading {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s ease-in-out infinite;
-    }
+        .message.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+        .redirect-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(102, 126, 234, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
 
-    /* High rating overlay */
-    .rating-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(79, 70, 229, 0.95);
-      backdrop-filter: blur(15px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1500;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
+        .redirect-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
 
-    .rating-overlay.show {
-      opacity: 1;
-    }
+        .redirect-message {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 300px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
 
-    .rating-message {
-      background: white;
-      padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      max-width: 450px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-      transform: scale(0.8);
-      transition: transform 0.4s ease;
-    }
+        .redirect-overlay.show .redirect-message {
+            transform: scale(1);
+        }
 
-    .rating-overlay.show .rating-message {
-      transform: scale(1);
-    }
-  </style>
+        .redirect-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .redirect-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 10px;
+        }
+
+        .redirect-text {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .countdown {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* iOS specific styles */
+        @supports (-webkit-touch-callout: none) {
+            .star {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .form-input {
+                -webkit-appearance: none;
+                border-radius: 12px;
+            }
+            
+            .submit-btn {
+                -webkit-appearance: none;
+                border-radius: 12px;
+            }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+            
+            .stars {
+                gap: 6px;
+            }
+            
+            .star {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .star::before {
+                font-size: 24px;
+            }
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="review-card">
-      <!-- Business Header -->
-      <div class="business-header">
-        <div class="business-avatar" id="businessAvatar">
-          No Image
-        </div>
-        <div class="business-info">
-          <h1 id="businessName">Loading...</h1>
-          <div class="business-meta" id="businessMeta">Please wait...</div>
-          <a class="business-link" id="businessLink" href="#" target="_blank">
-            📱 Open Review Link
-          </a>
-        </div>
-      </div>
-
-      <!-- Rating Section -->
-      <div class="rating-section">
-        <label class="rating-label">How was your experience?</label>
-        <div class="stars-container">
-          <div class="stars" id="starsContainer">
-            <div class="star" data-value="1" title="1 star - Poor"></div>
-            <div class="star" data-value="2" title="2 stars - Fair"></div>
-            <div class="star" data-value="3" title="3 stars - Good"></div>
-            <div class="star" data-value="4" title="4 stars - Very Good"></div>
-            <div class="star" data-value="5" title="5 stars - Excellent"></div>
-          </div>
-          <span class="rating-text" id="ratingText">Select rating</span>
-        </div>
-      </div>
-
-      <!-- Review Form -->
-      <form id="reviewForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="reviewerName">Your Name</label>
-            <input type="text" id="reviewerName" placeholder="Enter your name" required>
-          </div>
-          <div class="form-group">
-            <label for="reviewerMobile">Mobile Number</label>
-            <input type="tel" id="reviewerMobile" placeholder="Your mobile number" required>
-          </div>
+    <div class="container">
+        <!-- Loading State -->
+        <div class="loading-state" id="loadingState">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading business details...</div>
         </div>
 
-        <div class="form-group">
-          <label for="reviewComment">Share your experience</label>
-          <textarea id="reviewComment" placeholder="Tell others about your experience with this business..." required></textarea>
-          <div class="comment-suggestions" id="suggestionChips"></div>
-          <div class="helper-text">💡 Tip: Use the quick suggestions above or write your own detailed review</div>
+        <!-- Error State -->
+        <div class="error-state" id="errorState" style="display: none;">
+            <div class="error-icon">❌</div>
+            <div class="error-title">Business Not Found</div>
+            <div class="error-text" id="errorMessage">Unable to load business information</div>
+            <button class="retry-btn" onclick="location.reload()">Retry</button>
         </div>
 
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary" id="submitButton">
-            <span id="submitText">Submit Review</span>
-          </button>
-          <button type="button" class="btn btn-secondary" id="cancelButton">
-            Cancel
-          </button>
-          <div class="status-indicator" id="statusIndicator"></div>
-        </div>
+        <!-- Main Content -->
+        <div class="content" id="mainContent">
+            <div class="header">
+                <h1 class="title">Share Your Experience</h1>
+                <p class="subtitle">We value your feedback</p>
+            </div>
 
-        <div id="messageContainer"></div>
-      </form>
+            <div class="business-info" id="businessInfo">
+                <div class="business-avatar" id="businessAvatar">
+                    Loading...
+                </div>
+                <div class="business-name" id="businessName">Loading...</div>
+                <div class="business-location" id="businessLocation">Please wait...</div>
+                <div class="business-category" id="businessCategory"></div>
+            </div>
+
+            <div class="rating-section">
+                <div class="rating-label">Rate Your Experience</div>
+                <div class="rating-instruction">Click on the stars to rate</div>
+                
+                <div class="stars" id="starsContainer">
+                    <div class="star" data-rating="1"></div>
+                    <div class="star" data-rating="2"></div>
+                    <div class="star" data-rating="3"></div>
+                    <div class="star" data-rating="4"></div>
+                    <div class="star" data-rating="5"></div>
+                </div>
+                
+                <div class="rating-text" id="ratingText">Select your rating</div>
+            </div>
+
+            <div class="feedback-form" id="feedbackForm">
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Name</label>
+                        <input type="text" id="name" class="form-input" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="Enter your phone number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="note">Note</label>
+                        <textarea id="note" class="form-input form-textarea" placeholder="Tell us about your experience..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span id="submitText">Submit Feedback</span>
+                    </button>
+
+                    <div id="messageContainer"></div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    (function() {
-      // Quick suggestion options
-      const suggestionOptions = [
-        'Excellent service! 👌',
-        'Very professional staff 💼',
-        'Quick and efficient ⚡',
-        'Highly recommended! ⭐',
-        'Great value for money 💰',
-        'Friendly and helpful 😊',
-        'Could be better 🤔',
-        'Average experience 😐'
-      ];
+    <div class="redirect-overlay" id="redirectOverlay">
+        <div class="redirect-message">
+            <div class="redirect-icon">⭐</div>
+            <div class="redirect-title">Thank You!</div>
+            <div class="redirect-text">Redirecting to review platform...</div>
+            <div class="countdown">
+                <div class="loading"></div>
+                <span id="countdownText">3</span>
+            </div>
+        </div>
+    </div>
 
-      // Good review templates for 4-5 star ratings
-      const goodReviewTemplates = [
-        'Outstanding service! The team was incredibly professional and exceeded my expectations. Highly recommend to everyone!',
-        'Excellent experience from start to finish. Great staff, prompt service, and fantastic results. Will definitely return!',
-        'Amazing service quality! Professional, efficient, and friendly staff. One of the best experiences I\'ve had!',
-        'Superb! Everything was handled perfectly. Great communication, timely service, and excellent results. 5 stars!',
-        'Fantastic experience! The team went above and beyond to ensure everything was perfect. Highly recommended!'
-      ];
+    <script>
+        class ReviewForm {
+            constructor() {
+                this.currentRating = 0;
+                this.businessData = null;
+                this.businessId = null;
+                this.init();
+            }
 
-      let businessData = null;
+            init() {
+                this.extractBusinessId();
+                this.loadBusinessData();
+            }
 
-      // Star rating system
-      const stars = document.querySelectorAll('.star');
-      const ratingText = document.getElementById('ratingText');
-      let currentRating = 0;
+            extractBusinessId() {
+                // Extract business ID from URL path
+                const pathParts = window.location.pathname.split('/');
+                this.businessId = pathParts[pathParts.length - 1] || '';
+                
+                // Also check URL parameters as fallback
+                const urlParams = new URLSearchParams(window.location.search);
+                if (!this.businessId && urlParams.get('id')) {
+                    this.businessId = urlParams.get('id');
+                }
 
-      const ratingMessages = {
-        1: 'Poor ☹️',
-        2: 'Fair 😕',
-        3: 'Good 🙂',
-        4: 'Very Good 😊',
-        5: 'Excellent! 🌟'
-      };
+                if (!this.businessId) {
+                    this.showError('Invalid business ID in URL');
+                    return;
+                }
+            }
 
-      function updateStarDisplay(rating) {
-        stars.forEach((star, index) => {
-          star.classList.toggle('on', index < rating);
+            async loadBusinessData() {
+                try {
+                    this.showLoading();
+
+                    const response = await fetch(`/api/business/${this.businessId}`);
+                    
+                    if (!response.ok) {
+                        throw new Error('Business not found');
+                    }
+
+                    this.businessData = await response.json();
+                    this.displayBusinessInfo();
+                    this.setupStarRating();
+                    this.setupForm();
+                    this.showContent();
+
+                } catch (error) {
+                    this.showError(error.message || 'Failed to load business information');
+                }
+            }
+
+            displayBusinessInfo() {
+                const { businessData } = this;
+                
+                // Update business name
+                document.getElementById('businessName').textContent = 
+                    businessData.businessName || 'Business';
+                
+                // Update business location
+                const locationParts = [
+                    businessData.businessAddress,
+                    businessData.businessCity,
+                    businessData.businessState
+                ].filter(Boolean);
+                
+                document.getElementById('businessLocation').textContent = 
+                    locationParts.join(', ') || 'Location not available';
+                
+                // Update business category
+                const categoryElement = document.getElementById('businessCategory');
+                if (businessData.businessCategory) {
+                    categoryElement.textContent = businessData.businessCategory;
+                    categoryElement.style.display = 'inline-block';
+                } else {
+                    categoryElement.style.display = 'none';
+                }
+
+                // Update business avatar
+                const avatarElement = document.getElementById('businessAvatar');
+                if (businessData.businessPhoto) {
+                    const imgSrc = businessData.businessPhoto.startsWith('data:') 
+                        ? businessData.businessPhoto 
+                        : `data:image/jpeg;base64,${businessData.businessPhoto}`;
+                    
+                    avatarElement.innerHTML = `<img src="${imgSrc}" alt="Business Photo" />`;
+                } else {
+                    // Create initials from business name
+                    const initials = businessData.businessName 
+                        ? businessData.businessName.split(' ')
+                            .slice(0, 2)
+                            .map(word => word[0])
+                            .join('')
+                            .toUpperCase()
+                        : 'BIZ';
+                    
+                    avatarElement.textContent = initials;
+                }
+            }
+
+            setupStarRating() {
+                const stars = document.querySelectorAll('.star');
+                const ratingText = document.getElementById('ratingText');
+
+                const ratingTexts = {
+                    1: 'Poor 😔',
+                    2: 'Fair 😐', 
+                    3: 'Good 🙂',
+                    4: 'Very Good 😊',
+                    5: 'Excellent! 🌟'
+                };
+
+                stars.forEach((star, index) => {
+                    star.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const rating = parseInt(star.dataset.rating);
+                        this.setRating(rating);
+                    });
+
+                    // Touch events for better mobile experience
+                    star.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                    });
+
+                    star.addEventListener('touchend', (e) => {
+                        e.preventDefault();
+                        const rating = parseInt(star.dataset.rating);
+                        this.setRating(rating);
+                    });
+                });
+
+                const updateStars = (rating) => {
+                    stars.forEach((star, index) => {
+                        star.classList.toggle('selected', index < rating);
+                    });
+                    ratingText.textContent = rating > 0 ? ratingTexts[rating] : 'Select your rating';
+                };
+
+                this.updateStars = updateStars;
+            }
+
+            setRating(rating) {
+                this.currentRating = rating;
+                this.updateStars(rating);
+
+                if (rating >= 4) {
+                    // High rating: redirect to review platform
+                    this.redirectToReview();
+                } else {
+                    // Low rating: show feedback form
+                    this.showFeedbackForm();
+                }
+            }
+
+            redirectToReview() {
+                const reviewLink = this.businessData?.businessReviewLink;
+                
+                if (!reviewLink || reviewLink === '#') {
+                    this.showMessage('Review link not available for this business', 'error');
+                    return;
+                }
+
+                const overlay = document.getElementById('redirectOverlay');
+                const countdownElement = document.getElementById('countdownText');
+                
+                overlay.classList.add('show');
+                
+                let countdown = 3;
+                const interval = setInterval(() => {
+                    countdown--;
+                    countdownElement.textContent = countdown;
+                    
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        // Redirect in same window
+                        window.location.href = reviewLink;
+                    }
+                }, 1000);
+            }
+
+            showFeedbackForm() {
+                const form = document.getElementById('feedbackForm');
+                form.classList.add('show');
+                
+                // Smooth scroll to form
+                setTimeout(() => {
+                    form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 200);
+            }
+
+            setupForm() {
+                const form = document.getElementById('reviewForm');
+                
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('name').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    const note = document.getElementById('note').value.trim();
+
+                    // Validation
+                    if (!name || name.length < 2) {
+                        this.showMessage('Please enter a valid name (minimum 2 characters)', 'error');
+                        return;
+                    }
+
+                    if (!phone || phone.length < 6) {
+                        this.showMessage('Please enter a valid phone number', 'error');
+                        return;
+                    }
+
+                    if (!note || note.length < 5) {
+                        this.showMessage('Please write some feedback (minimum 5 characters)', 'error');
+                        return;
+                    }
+
+                    // Submit feedback
+                    await this.submitFeedback({
+                        businessId: this.businessId,
+                        name,
+                        phone,
+                        note,
+                        rating: this.currentRating
+                    });
+                });
+            }
+
+            async submitFeedback(data) {
+                const submitBtn = document.getElementById('submitBtn');
+                const submitText = document.getElementById('submitText');
+
+                try {
+                    submitBtn.disabled = true;
+                    submitText.innerHTML = '<div class="loading"></div>Submitting...';
+
+                    const response = await fetch('/api/review/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json().catch(() => ({}));
+
+                    if (!response.ok) {
+                        throw new Error(result.error || 'Failed to submit review');
+                    }
+
+                    this.showMessage('Thank you for your feedback! 🎉', 'success');
+                    document.getElementById('reviewForm').reset();
+                    this.currentRating = 0;
+                    this.updateStars(0);
+                    
+                    // Hide form after success
+                    setTimeout(() => {
+                        document.getElementById('feedbackForm').classList.remove('show');
+                    }, 2000);
+
+                } catch (error) {
+                    this.showMessage(error.message || 'Error submitting feedback. Please try again.', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Submit Feedback';
+                }
+            }
+
+            showLoading() {
+                document.getElementById('loadingState').style.display = 'block';
+                document.getElementById('errorState').style.display = 'none';
+                document.getElementById('mainContent').classList.remove('show');
+            }
+
+            showError(message) {
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('errorState').style.display = 'block';
+                document.getElementById('errorMessage').textContent = message;
+                document.getElementById('mainContent').classList.remove('show');
+            }
+
+            showContent() {
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('errorState').style.display = 'none';
+                document.getElementById('mainContent').classList.add('show');
+            }
+
+            showMessage(message, type) {
+                const messageContainer = document.getElementById('messageContainer');
+                messageContainer.innerHTML = `<div class="message ${type}">${message}</div>`;
+                
+                if (type === 'success') {
+                    setTimeout(() => {
+                        messageContainer.innerHTML = '';
+                    }, 5000);
+                }
+            }
+        }
+
+        // Initialize the form when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ReviewForm();
         });
-        ratingText.textContent = rating > 0 ? ratingMessages[rating] : 'Select rating';
-      }
 
-      function setRating(rating) {
-        currentRating = rating;
-        updateStarDisplay(rating);
-        
-        // Handle 4-5 star ratings
-        if (rating >= 4) {
-          handleHighRating();
-        }
-      }
-
-      async function handleHighRating() {
-        try {
-          // Get a random good review template
-          const randomTemplate = goodReviewTemplates[Math.floor(Math.random() * goodReviewTemplates.length)];
-          
-          // Copy to clipboard
-          await navigator.clipboard.writeText(randomTemplate);
-          
-          // Show copy notification and rating overlay
-          showCopyNotification();
-          showHighRatingOverlay();
-          
-          // Redirect to business review link after delay
-          setTimeout(() => {
-            const reviewLink = businessData?.businessReviewLink || '#';
-            if (reviewLink && reviewLink !== '#') {
-              window.open(reviewLink, '_blank');
-            } else {
-              showMessage('Review link not available, but comment copied to clipboard!', false);
+        // Prevent zoom on input focus (iOS)
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
             }
-          }, 3000);
-          
-        } catch (error) {
-          // Fallback if clipboard API fails
-          const randomTemplate = goodReviewTemplates[Math.floor(Math.random() * goodReviewTemplates.length)];
-          showMessage('Please copy this review: ' + randomTemplate, false);
-          showHighRatingOverlay();
-          
-          setTimeout(() => {
-            const reviewLink = businessData?.businessReviewLink || '#';
-            if (reviewLink && reviewLink !== '#') {
-              window.open(reviewLink, '_blank');
-            }
-          }, 3000);
-        }
-      }
-
-      function showHighRatingOverlay() {
-        const overlay = document.createElement('div');
-        overlay.className = 'rating-overlay';
-        
-        const message = document.createElement('div');
-        message.className = 'rating-message';
-        message.innerHTML = `
-          <div style="font-size: 48px; margin-bottom: 20px;">⭐</div>
-          <h2 style="color: #1a202c; margin: 0 0 16px 0; font-size: 24px;">Awesome! 5-Star Experience!</h2>
-          <p style="color: #4a5568; margin: 0 0 20px 0; line-height: 1.6;">
-            Thank you for the great rating! We've copied a review comment to your clipboard.
-          </p>
-          <div style="background: #f0fdf4; padding: 16px; border-radius: 12px; border: 2px solid #bbf7d0; margin-bottom: 20px;">
-            <p style="color: #15803d; margin: 0; font-weight: 600; font-size: 14px;">
-              📋 Review comment copied to clipboard!<br>
-              🔗 Redirecting to review platform...
-            </p>
-          </div>
-          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; color: #6b7280;">
-            <div class="loading"></div>
-            <span style="font-size: 14px;">Please wait...</span>
-          </div>
-        `;
-        
-        overlay.appendChild(message);
-        document.body.appendChild(overlay);
-        
-        // Animate in
-        setTimeout(() => {
-          overlay.classList.add('show');
-        }, 100);
-        
-        // Remove after delay
-        setTimeout(() => {
-          overlay.classList.remove('show');
-          setTimeout(() => {
-            if (overlay.parentNode) {
-              overlay.parentNode.removeChild(overlay);
-            }
-          }, 400);
-        }, 3500);
-      }
-
-      function showCopyNotification() {
-        // Create a temporary notification
-        const notification = document.createElement('div');
-        notification.style.cssText = `
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          background: #10b981;
-          color: white;
-          padding: 16px 24px;
-          border-radius: 12px;
-          box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-          font-weight: 600;
-          z-index: 1000;
-          transform: translateX(400px);
-          transition: all 0.3s ease;
-        `;
-        notification.innerHTML = '📋 Review comment copied to clipboard!';
-        
-        document.body.appendChild(notification);
-        
-        // Animate in
-        setTimeout(() => {
-          notification.style.transform = 'translateX(0)';
-        }, 100);
-        
-        // Remove after delay
-        setTimeout(() => {
-          notification.style.transform = 'translateX(400px)';
-          setTimeout(() => {
-            if (notification.parentNode) {
-              notification.parentNode.removeChild(notification);
-            }
-          }, 300);
-        }, 3000);
-      }
-
-      // Star event listeners
-      stars.forEach((star, index) => {
-        star.addEventListener('click', () => setRating(index + 1));
-        star.addEventListener('mouseenter', () => updateStarDisplay(index + 1));
-      });
-
-      document.getElementById('starsContainer').addEventListener('mouseleave', () => {
-        updateStarDisplay(currentRating);
-      });
-
-      // Initialize suggestion chips
-      function initializeSuggestions() {
-        const container = document.getElementById('suggestionChips');
-        suggestionOptions.forEach(suggestion => {
-          const chip = document.createElement('button');
-          chip.type = 'button';
-          chip.className = 'suggestion-chip';
-          chip.textContent = suggestion;
-          chip.addEventListener('click', () => {
-            const commentField = document.getElementById('reviewComment');
-            const currentText = commentField.value.trim();
-            const newText = currentText ? `${currentText} ${suggestion}` : suggestion;
-            commentField.value = newText;
-            commentField.focus();
-          });
-          container.appendChild(chip);
         });
-      }
 
-      // Business data loading
-      async function loadBusinessData() {
-        const pathParts = window.location.pathname.split('/');
-        const businessId = pathParts[pathParts.length - 1] || '';
-
-        if (!businessId) {
-          showMessage('Invalid business ID in URL', true);
-          return;
-        }
-
-        try {
-          const response = await fetch(`/api/business/${businessId}`);
-          if (!response.ok) throw new Error('Business not found');
-          
-          const business = await response.json();
-          businessData = business; // Store business data globally
-          
-          // Update business info
-          document.getElementById('businessName').textContent = business.businessName || 'Business';
-          document.getElementById('businessMeta').textContent = 
-            [business.businessCategory, business.serialId].filter(Boolean).join(' • ');
-          document.getElementById('businessLink').href = business.businessReviewLink || '#';
-
-          // Update business avatar
-          const avatar = document.getElementById('businessAvatar');
-          if (business.businessPhoto) {
-            const imgSrc = business.businessPhoto.startsWith('data:') 
-              ? business.businessPhoto 
-              : `data:image/jpeg;base64,${business.businessPhoto}`;
-            avatar.innerHTML = `<img src="${imgSrc}" alt="Business Photo">`;
-          } else {
-            const initials = business.businessName 
-              ? business.businessName.split(' ').slice(0, 2).map(word => word[0]).join('').toUpperCase()
-              : 'BIZ';
-            avatar.textContent = initials;
-          }
-        } catch (error) {
-          showMessage(error.message || 'Failed to load business information', true);
-        }
-      }
-
-      // Form submission
-      async function handleFormSubmit(event) {
-        event.preventDefault();
-
-        const name = document.getElementById('reviewerName').value.trim();
-        const mobile = document.getElementById('reviewerMobile').value.trim();
-        const comment = document.getElementById('reviewComment').value.trim();
-
-        // Validation
-        if (!currentRating) {
-          showMessage('Please select a rating', true);
-          return;
-        }
-
-        if (!name || name.length < 2) {
-          showMessage('Please enter a valid name (minimum 2 characters)', true);
-          return;
-        }
-
-        if (!mobile || mobile.length < 6) {
-          showMessage('Please enter a valid mobile number', true);
-          return;
-        }
-
-        if (!comment || comment.length < 5) {
-          showMessage('Please write a comment (minimum 5 characters)', true);
-          return;
-        }
-
-        // Get business ID
-        const pathParts = window.location.pathname.split('/');
-        const businessId = pathParts[pathParts.length - 1] || '';
-
-        const reviewData = {
-          businessId,
-          name,
-          mobile,
-          comment,
-          rating: currentRating
-        };
-
-        await submitReview(reviewData);
-      }
-
-      async function submitReview(reviewData) {
-        const submitButton = document.getElementById('submitButton');
-        const submitText = document.getElementById('submitText');
-        const statusIndicator = document.getElementById('statusIndicator');
-
-        try {
-          submitButton.disabled = true;
-          submitText.innerHTML = '<span class="loading"></span> Submitting...';
-          statusIndicator.textContent = 'Processing...';
-
-          const response = await fetch('/api/review/add', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(reviewData)
-          });
-
-          const result = await response.json().catch(() => ({}));
-
-          if (!response.ok) {
-            throw new Error(result.error || 'Failed to submit review');
-          }
-
-          // Different handling based on rating
-          if (currentRating < 4) {
-            // Show beautiful thank you message for low ratings
-            showThankYouMessage();
-            
-            // Redirect to geniustechie.in after delay
-            setTimeout(() => {
-              window.open('https://www.geniustechie.in/', '_blank');
-            }, 3000);
-          } else {
-            // For high ratings, just show simple success message
-            showMessage('🎉 Thank you! Your review has been submitted successfully.');
-            
-            // Redirect to business page
-            setTimeout(() => {
-              window.location.href = `/api/business/${reviewData.businessId}`;
-            }, 1500);
-          }
-
-          document.getElementById('reviewForm').reset();
-          setRating(0);
-
-        } catch (error) {
-          showMessage(error.message || 'Error submitting review. Please try again.', true);
-        } finally {
-          submitButton.disabled = false;
-          submitText.textContent = 'Submit Review';
-          statusIndicator.textContent = '';
-        }
-      }
-
-      function showThankYouMessage() {
-        // Create beautiful overlay thank you message
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.8);
-          backdrop-filter: blur(10px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 2000;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        `;
-
-        const thankYouCard = document.createElement('div');
-        thankYouCard.style.cssText = `
-          background: white;
-          padding: 40px;
-          border-radius: 20px;
-          text-align: center;
-          max-width: 400px;
-          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-          transform: scale(0.8);
-          transition: transform 0.3s ease;
-        `;
-
-        thankYouCard.innerHTML = `
-          <div style="font-size: 48px; margin-bottom: 20px;">🙏</div>
-          <h2 style="color: #1a202c; margin: 0 0 16px 0; font-size: 24px;">Thank You!</h2>
-          <p style="color: #4a5568; margin: 0 0 20px 0; line-height: 1.6;">
-            We really appreciate your feedback. Your input helps us improve our services.
-          </p>
-          <div style="background: #f0f9ff; padding: 16px; border-radius: 12px; border: 2px solid #bfdbfe;">
-            <p style="color: #1e40af; margin: 0; font-weight: 600;">
-              We're redirecting you to discover more amazing services...
-            </p>
-          </div>
-        `;
-
-        overlay.appendChild(thankYouCard);
-        document.body.appendChild(overlay);
-
-        // Animate in
-        setTimeout(() => {
-          overlay.style.opacity = '1';
-          thankYouCard.style.transform = 'scale(1)';
-        }, 100);
-
-        // Remove after delay
-        setTimeout(() => {
-          overlay.style.opacity = '0';
-          setTimeout(() => {
-            if (overlay.parentNode) {
-              overlay.parentNode.removeChild(overlay);
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
             }
-          }, 300);
-        }, 3500);
-      }
-
-      function showMessage(message, isError = false) {
-        const container = document.getElementById('messageContainer');
-        const messageClass = isError ? 'error' : 'success';
-        container.innerHTML = `<div class="message ${messageClass}">${message}</div>`;
-        
-        // Auto-hide success messages
-        if (!isError) {
-          setTimeout(() => {
-            container.innerHTML = '';
-          }, 5000);
-        }
-      }
-
-      // Event listeners
-      document.getElementById('reviewForm').addEventListener('submit', handleFormSubmit);
-      
-      document.getElementById('cancelButton').addEventListener('click', () => {
-        if (confirm('Are you sure you want to cancel? Your review will be lost.')) {
-          window.history.back();
-        }
-      });
-
-      // Initialize everything
-      initializeSuggestions();
-      loadBusinessData();
-    })();
-  </script>
+            lastTouchEnd = now;
+        }, false);
+    </script>
 </body>
 </html>

@@ -24,6 +24,10 @@ app.get('/review/:id', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'review.html'));
 });
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // API routes
 const authRoutes = require('./routes/authRoutes');
 const homeRoutes = require("./routes/homeRoutes");
