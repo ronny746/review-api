@@ -7,6 +7,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="format-detection" content="telephone=no">
     <title>Share Your Experience</title>
+    
+    <!-- SweetAlert2 CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
         * {
             margin: 0;
@@ -95,6 +100,12 @@
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
         }
 
         .header {
@@ -415,6 +426,65 @@
             gap: 8px;
         }
 
+        /* Custom SweetAlert2 Styles */
+        .swal2-popup {
+            border-radius: 20px;
+            font-family: inherit;
+        }
+
+        .swal2-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .swal2-content {
+            font-size: 1rem;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            border-radius: 10px !important;
+            padding: 12px 24px !important;
+            font-weight: 600 !important;
+            box-shadow: none !important;
+        }
+
+        .swal2-cancel {
+            background: #6b7280 !important;
+            border-radius: 10px !important;
+            padding: 12px 24px !important;
+            font-weight: 600 !important;
+            box-shadow: none !important;
+        }
+
+        /* Success Animation */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        .success-exit {
+            animation: fadeSlideUp 0.5s ease-in-out forwards;
+        }
+
         /* iOS specific styles */
         @supports (-webkit-touch-callout: none) {
             .star {
@@ -497,7 +567,7 @@
             <div class="rating-section">
                 <div class="rating-label">Rate Your Experience</div>
                 <div class="rating-instruction">Click on the stars to rate</div>
-                
+
                 <div class="stars" id="starsContainer">
                     <div class="star" data-rating="1"></div>
                     <div class="star" data-rating="2"></div>
@@ -505,7 +575,7 @@
                     <div class="star" data-rating="4"></div>
                     <div class="star" data-rating="5"></div>
                 </div>
-                
+
                 <div class="rating-text" id="ratingText">Select your rating</div>
             </div>
 
@@ -566,7 +636,7 @@
                 // Extract business ID from URL path
                 const pathParts = window.location.pathname.split('/');
                 this.businessId = pathParts[pathParts.length - 1] || '';
-                
+
                 // Also check URL parameters as fallback
                 const urlParams = new URLSearchParams(window.location.search);
                 if (!this.businessId && urlParams.get('id')) {
@@ -584,7 +654,7 @@
                     this.showLoading();
 
                     const response = await fetch(`/api/business/${this.businessId}`);
-                    
+
                     if (!response.ok) {
                         throw new Error('Business not found');
                     }
@@ -602,21 +672,21 @@
 
             displayBusinessInfo() {
                 const { businessData } = this;
-                
+
                 // Update business name
-                document.getElementById('businessName').textContent = 
+                document.getElementById('businessName').textContent =
                     businessData.businessName || 'Business';
-                
+
                 // Update business location
                 const locationParts = [
                     businessData.businessAddress,
                     businessData.businessCity,
                     businessData.businessState
                 ].filter(Boolean);
-                
-                document.getElementById('businessLocation').textContent = 
+
+                document.getElementById('businessLocation').textContent =
                     locationParts.join(', ') || 'Location not available';
-                
+
                 // Update business category
                 const categoryElement = document.getElementById('businessCategory');
                 if (businessData.businessCategory) {
@@ -629,21 +699,21 @@
                 // Update business avatar
                 const avatarElement = document.getElementById('businessAvatar');
                 if (businessData.businessPhoto) {
-                    const imgSrc = businessData.businessPhoto.startsWith('data:') 
-                        ? businessData.businessPhoto 
+                    const imgSrc = businessData.businessPhoto.startsWith('data:')
+                        ? businessData.businessPhoto
                         : `data:image/jpeg;base64,${businessData.businessPhoto}`;
-                    
+
                     avatarElement.innerHTML = `<img src="${imgSrc}" alt="Business Photo" />`;
                 } else {
                     // Create initials from business name
-                    const initials = businessData.businessName 
+                    const initials = businessData.businessName
                         ? businessData.businessName.split(' ')
                             .slice(0, 2)
                             .map(word => word[0])
                             .join('')
                             .toUpperCase()
                         : 'BIZ';
-                    
+
                     avatarElement.textContent = initials;
                 }
             }
@@ -654,7 +724,7 @@
 
                 const ratingTexts = {
                     1: 'Poor 😔',
-                    2: 'Fair 😐', 
+                    2: 'Fair 😐',
                     3: 'Good 🙂',
                     4: 'Very Good 😊',
                     5: 'Excellent! 🌟'
@@ -702,36 +772,44 @@
                 }
             }
 
-            redirectToReview() {
+            async redirectToReview() {
                 const reviewLink = this.businessData?.businessReviewLink;
-                
+
                 if (!reviewLink || reviewLink === '#') {
-                    this.showMessage('Review link not available for this business', 'error');
+                    await Swal.fire({
+                        icon: 'warning',
+                        title: 'Review Link Unavailable',
+                        text: 'Review link is not available for this business',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            confirmButton: 'swal2-confirm'
+                        }
+                    });
                     return;
                 }
 
-                const overlay = document.getElementById('redirectOverlay');
-                const countdownElement = document.getElementById('countdownText');
-                
-                overlay.classList.add('show');
-                
-                let countdown = 3;
-                const interval = setInterval(() => {
-                    countdown--;
-                    countdownElement.textContent = countdown;
-                    
-                    if (countdown <= 0) {
-                        clearInterval(interval);
-                        // Redirect in same window
-                        window.location.href = reviewLink;
+                // Show success message for high rating first
+                await Swal.fire({
+                    icon: 'success',
+                    title: '🌟 Excellent Rating!',
+                    text: 'Thank you for the great rating! Redirecting you to leave a public review.',
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    customClass: {
+                        popup: 'swal2-popup'
                     }
-                }, 1000);
+                });
+
+                // Then redirect
+                window.location.href = reviewLink;
             }
 
             showFeedbackForm() {
                 const form = document.getElementById('feedbackForm');
                 form.classList.add('show');
-                
+
                 // Smooth scroll to form
                 setTimeout(() => {
                     form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -740,31 +818,55 @@
 
             setupForm() {
                 const form = document.getElementById('reviewForm');
-                
+
                 form.addEventListener('submit', async (e) => {
                     e.preventDefault();
-                    
+
                     const name = document.getElementById('name').value.trim();
                     const phone = document.getElementById('phone').value.trim();
                     const note = document.getElementById('note').value.trim();
 
                     // Validation
                     if (!name || name.length < 2) {
-                        this.showMessage('Please enter a valid name (minimum 2 characters)', 'error');
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Invalid Name',
+                            text: 'Please enter a valid name (minimum 2 characters)',
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'swal2-confirm'
+                            }
+                        });
                         return;
                     }
 
                     if (!phone || phone.length < 6) {
-                        this.showMessage('Please enter a valid phone number', 'error');
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Invalid Phone',
+                            text: 'Please enter a valid phone number (minimum 6 digits)',
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'swal2-confirm'
+                            }
+                        });
                         return;
                     }
 
                     if (!note || note.length < 5) {
-                        this.showMessage('Please write some feedback (minimum 5 characters)', 'error');
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Invalid Feedback',
+                            text: 'Please write some feedback (minimum 5 characters)',
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'swal2-confirm'
+                            }
+                        });
                         return;
                     }
 
-                    // Submit feedback
+                    // Direct submission without confirmation
                     await this.submitFeedback({
                         businessId: this.businessId,
                         name,
@@ -797,22 +899,60 @@
                         throw new Error(result.error || 'Failed to submit review');
                     }
 
-                    this.showMessage('Thank you for your feedback! 🎉', 'success');
-                    document.getElementById('reviewForm').reset();
-                    this.currentRating = 0;
-                    this.updateStars(0);
-                    
-                    // Hide form after success
-                    setTimeout(() => {
-                        document.getElementById('feedbackForm').classList.remove('show');
-                    }, 2000);
+                    // Show beautiful success animation and redirect
+                    await this.showSuccessAndRedirect();
 
                 } catch (error) {
-                    this.showMessage(error.message || 'Error submitting feedback. Please try again.', 'error');
-                } finally {
+                    // Error alert
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Submission Failed',
+                        text: error.message || 'Error submitting feedback. Please try again.',
+                        confirmButtonText: 'Try Again',
+                        customClass: {
+                            confirmButton: 'swal2-confirm'
+                        }
+                    });
+                    
                     submitBtn.disabled = false;
                     submitText.textContent = 'Submit Feedback';
                 }
+            }
+
+            async showSuccessAndRedirect() {
+                // Hide the form with animation
+                const container = document.querySelector('.container');
+                container.style.transform = 'scale(0.95)';
+                container.style.opacity = '0.7';
+
+                // Show success alert with timer
+                await Swal.fire({
+                    icon: 'success',
+                    title: '🎉 Thank You!',
+                    text: 'Your feedback has been submitted successfully!',
+                    timer: 2500,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    customClass: {
+                        popup: 'swal2-popup'
+                    },
+                    didOpen: () => {
+                        // Add some sparkle animation
+                        const popup = Swal.getPopup();
+                        popup.style.animation = 'bounce 0.6s ease-in-out';
+                    }
+                });
+
+                // Smooth page transition
+                document.body.style.transition = 'all 0.5s ease';
+                document.body.style.transform = 'translateY(-20px)';
+                document.body.style.opacity = '0';
+
+                // Redirect after animation
+                setTimeout(() => {
+                    window.location.replace(window.location.origin + '/');
+                }, 500);
             }
 
             showLoading() {
@@ -821,11 +961,26 @@
                 document.getElementById('mainContent').classList.remove('show');
             }
 
-            showError(message) {
+            async showError(message) {
                 document.getElementById('loadingState').style.display = 'none';
                 document.getElementById('errorState').style.display = 'block';
                 document.getElementById('errorMessage').textContent = message;
                 document.getElementById('mainContent').classList.remove('show');
+
+                // Also show SweetAlert for error
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Error Loading Business',
+                    text: message,
+                    confirmButtonText: 'Retry',
+                    customClass: {
+                        confirmButton: 'swal2-confirm'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
             }
 
             showContent() {
@@ -837,7 +992,7 @@
             showMessage(message, type) {
                 const messageContainer = document.getElementById('messageContainer');
                 messageContainer.innerHTML = `<div class="message ${type}">${message}</div>`;
-                
+
                 if (type === 'success') {
                     setTimeout(() => {
                         messageContainer.innerHTML = '';
@@ -852,20 +1007,38 @@
         });
 
         // Prevent zoom on input focus (iOS)
-        document.addEventListener('touchstart', function(e) {
+        document.addEventListener('touchstart', function (e) {
             if (e.touches.length > 1) {
                 e.preventDefault();
             }
         });
 
         let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(e) {
+        document.addEventListener('touchend', function (e) {
             const now = (new Date()).getTime();
             if (now - lastTouchEnd <= 300) {
                 e.preventDefault();
             }
             lastTouchEnd = now;
         }, false);
+
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
+        });
+
+        // Handle offline/online events
+        window.addEventListener('offline', function() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No Internet Connection',
+                text: 'Please check your internet connection and try again.',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'swal2-confirm'
+                }
+            });
+        });
     </script>
 </body>
 </html>
