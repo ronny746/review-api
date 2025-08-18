@@ -360,72 +360,6 @@
             border: 1px solid #fecaca;
         }
 
-        .redirect-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(102, 126, 234, 0.95);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .redirect-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .redirect-message {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 300px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        }
-
-        .redirect-overlay.show .redirect-message {
-            transform: scale(1);
-        }
-
-        .redirect-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .redirect-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #374151;
-            margin-bottom: 10px;
-        }
-
-        .redirect-text {
-            color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .countdown {
-            background: #667eea;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
         /* Custom SweetAlert2 Styles */
         .swal2-popup {
             border-radius: 20px;
@@ -457,7 +391,6 @@
             box-shadow: none !important;
         }
 
-        /* Success Animation */
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {
                 transform: translateY(0);
@@ -587,13 +520,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="phone">Phone Number</label>
-                        <input type="tel" id="phone" class="form-input" placeholder="Enter your phone number" required>
+                        <label class="form-label" for="mobile">Mobile Number</label>
+                        <input type="tel" id="mobile" class="form-input" placeholder="Enter your mobile number" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="note">Note</label>
-                        <textarea id="note" class="form-input form-textarea" placeholder="Tell us about your experience..." required></textarea>
+                        <label class="form-label" for="location">Location</label>
+                        <input type="text" id="location" class="form-input" placeholder="Enter your location" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="comment">Comment</label>
+                        <textarea id="comment" class="form-input form-textarea" placeholder="Tell us about your experience..." required></textarea>
                     </div>
 
                     <button type="submit" class="submit-btn" id="submitBtn">
@@ -602,18 +540,6 @@
 
                     <div id="messageContainer"></div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="redirect-overlay" id="redirectOverlay">
-        <div class="redirect-message">
-            <div class="redirect-icon">⭐</div>
-            <div class="redirect-title">Thank You!</div>
-            <div class="redirect-text">Redirecting to review platform...</div>
-            <div class="countdown">
-                <div class="loading"></div>
-                <span id="countdownText">3</span>
             </div>
         </div>
     </div>
@@ -823,8 +749,9 @@
                     e.preventDefault();
 
                     const name = document.getElementById('name').value.trim();
-                    const phone = document.getElementById('phone').value.trim();
-                    const note = document.getElementById('note').value.trim();
+                    const mobile = document.getElementById('mobile').value.trim();
+                    const location = document.getElementById('location').value.trim();
+                    const comment = document.getElementById('comment').value.trim();
 
                     // Validation
                     if (!name || name.length < 2) {
@@ -840,11 +767,11 @@
                         return;
                     }
 
-                    if (!phone || phone.length < 6) {
+                    if (!mobile || mobile.length < 6) {
                         await Swal.fire({
                             icon: 'error',
-                            title: 'Invalid Phone',
-                            text: 'Please enter a valid phone number (minimum 6 digits)',
+                            title: 'Invalid Mobile',
+                            text: 'Please enter a valid mobile number (minimum 6 digits)',
                             confirmButtonText: 'OK',
                             customClass: {
                                 confirmButton: 'swal2-confirm'
@@ -853,10 +780,23 @@
                         return;
                     }
 
-                    if (!note || note.length < 5) {
+                    if (!location || location.length < 2) {
                         await Swal.fire({
                             icon: 'error',
-                            title: 'Invalid Feedback',
+                            title: 'Invalid Location',
+                            text: 'Please enter a valid location (minimum 2 characters)',
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                confirmButton: 'swal2-confirm'
+                            }
+                        });
+                        return;
+                    }
+
+                    if (!comment || comment.length < 5) {
+                        await Swal.fire({
+                            icon: 'error',
+                            title: 'Invalid Comment',
                             text: 'Please write some feedback (minimum 5 characters)',
                             confirmButtonText: 'OK',
                             customClass: {
@@ -866,12 +806,13 @@
                         return;
                     }
 
-                    // Direct submission without confirmation
+                    // Submit with correct API body format
                     await this.submitFeedback({
                         businessId: this.businessId,
                         name,
-                        phone,
-                        note,
+                        mobile,
+                        location,
+                        comment,
                         rating: this.currentRating
                     });
                 });
@@ -885,7 +826,7 @@
                     submitBtn.disabled = true;
                     submitText.innerHTML = '<div class="loading"></div>Submitting...';
 
-                    const response = await fetch('/api/review/add', {
+                    const response = await fetch('http://31.97.231.85:2000/api/review/add', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
