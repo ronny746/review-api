@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SRG Plus (Scan Rank and Grow) - Transform your business with digital marketing automation, GMB optimization, website development & multi-channel customer engagement">
-    <meta name="keywords" content="digital marketing, automation, GMB optimization, website development, WhatsApp automation">
+    <meta name="description" content="SRG Plus (Scan Rank and Grow) - Transform your business with digital marketing automation, app development, website development & multi-channel customer engagement">
+    <meta name="keywords" content="digital marketing, automation, app development, website development, WhatsApp automation, mobile apps">
     <title>SRG Plus (Scan Rank and Grow) - Transform Bharat to Digital India</title>
     
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,23 +26,28 @@
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
-            --secondary: #ec4899;
-            --accent: #f59e0b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --dark: #1e293b;
+            --primary-light: #a5b4fc;
+            --secondary: #06d6a0;
+            --accent: #f72585;
+            --warning: #ffbe0b;
+            --success: #06d6a0;
+            --danger: #ef476f;
+            --dark: #0f0f23;
+            --dark-secondary: #1a1a2e;
             --gray: #64748b;
-            --light-gray: #f1f5f9;
+            --light-gray: #f8fafc;
             --white: #ffffff;
-            --gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #f59e0b 100%);
-            --gradient-light: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 50%, rgba(245, 158, 11, 0.1) 100%);
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, #6366f1 0%, #06d6a0 50%, #f72585 100%);
+            --gradient-dark: linear-gradient(135deg, #4f46e5 0%, #059669 50%, #e11d48 100%);
+            --gradient-light: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(6, 214, 160, 0.1) 50%, rgba(247, 37, 133, 0.1) 100%);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--dark);
             overflow-x: hidden;
@@ -56,7 +61,7 @@
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
             position: fixed;
             top: 0;
             left: 0;
@@ -74,7 +79,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 2rem;
+            padding: 1rem clamp(1rem, 5vw, 2rem);
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -83,7 +88,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 1.75rem;
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
             font-weight: 800;
             background: var(--gradient);
             -webkit-background-clip: text;
@@ -97,12 +102,13 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            font-size: 1.5rem;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2.5rem;
+            gap: clamp(1rem, 3vw, 2.5rem);
             align-items: center;
         }
 
@@ -113,6 +119,7 @@
             transition: all 0.3s ease;
             position: relative;
             padding: 0.5rem 0;
+            font-size: 0.95rem;
         }
 
         .nav-links a:hover {
@@ -139,7 +146,7 @@
         .cta-btn {
             background: var(--gradient);
             color: var(--white);
-            padding: 0.875rem 2rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
@@ -147,6 +154,7 @@
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            font-size: 0.9rem;
         }
 
         .cta-btn::before {
@@ -166,7 +174,7 @@
 
         .cta-btn:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-xl);
+            box-shadow: var(--shadow-glow);
         }
 
         /* Mobile menu toggle */
@@ -196,7 +204,7 @@
         .hero {
             background: var(--gradient);
             color: var(--white);
-            padding: 140px 2rem 100px;
+            padding: clamp(120px, 15vh, 160px) clamp(1rem, 5vw, 2rem) clamp(80px, 10vh, 120px);
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -216,6 +224,18 @@
             opacity: 0.3;
         }
 
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float-slow 8s ease-in-out infinite;
+        }
+
         .hero-content {
             max-width: 1000px;
             margin: 0 auto;
@@ -227,19 +247,19 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 0.5rem 1.5rem;
             border-radius: 50px;
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
             font-weight: 500;
             margin-bottom: 2rem;
             animation: float 3s ease-in-out infinite;
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
             font-weight: 900;
             margin-bottom: 1.5rem;
             line-height: 1.1;
@@ -247,13 +267,14 @@
         }
 
         .hero-subtitle {
-            font-size: 1.375rem;
+            font-size: clamp(1.1rem, 3vw, 1.375rem);
             margin-bottom: 3rem;
-            opacity: 0.9;
+            opacity: 0.95;
             font-weight: 400;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.6;
         }
 
         .hero-buttons {
@@ -265,7 +286,7 @@
         }
 
         .btn {
-            padding: 1.125rem 2.5rem;
+            padding: clamp(1rem, 3vw, 1.125rem) clamp(1.5rem, 4vw, 2.5rem);
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
@@ -275,9 +296,10 @@
             gap: 0.75rem;
             border: none;
             cursor: pointer;
-            font-size: 1.125rem;
+            font-size: clamp(0.95rem, 2.5vw, 1.125rem);
             position: relative;
             overflow: hidden;
+            white-space: nowrap;
         }
 
         .btn-primary {
@@ -307,16 +329,16 @@
 
         .hero-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
             max-width: 800px;
             margin: 0 auto;
         }
 
         .stat {
             text-align: center;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
+            padding: clamp(1rem, 3vw, 1.5rem);
+            background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
@@ -325,11 +347,11 @@
 
         .stat:hover {
             transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.18);
         }
 
         .stat-number {
-            font-size: 3rem;
+            font-size: clamp(2rem, 6vw, 3rem);
             font-weight: 900;
             margin-bottom: 0.5rem;
             background: linear-gradient(45deg, #ffffff, #f0f0f0);
@@ -341,11 +363,12 @@
         .stat-label {
             opacity: 0.9;
             font-weight: 500;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
         }
 
         /* Services Section */
         .services {
-            padding: 120px 2rem;
+            padding: clamp(80px, 15vh, 120px) clamp(1rem, 5vw, 2rem);
             background: var(--light-gray);
             position: relative;
         }
@@ -357,7 +380,7 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: clamp(3rem, 8vh, 5rem);
         }
 
         .section-badge {
@@ -375,7 +398,7 @@
         }
 
         .section-title {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
             font-weight: 800;
             margin-bottom: 1.5rem;
             background: var(--gradient);
@@ -386,28 +409,29 @@
         }
 
         .section-subtitle {
-            font-size: 1.25rem;
+            font-size: clamp(1rem, 3vw, 1.25rem);
             color: var(--gray);
             max-width: 700px;
             margin: 0 auto;
             font-weight: 400;
+            line-height: 1.6;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+            gap: clamp(1.5rem, 4vw, 2.5rem);
         }
 
         .service-card {
             background: var(--white);
-            padding: 3rem;
+            padding: clamp(2rem, 6vw, 3rem);
             border-radius: 24px;
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.1);
         }
 
         .service-card::before {
@@ -432,14 +456,14 @@
         }
 
         .service-icon {
-            width: 90px;
-            height: 90px;
+            width: clamp(70px, 15vw, 90px);
+            height: clamp(70px, 15vw, 90px);
             background: var(--gradient-light);
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 5vw, 2.5rem);
             margin-bottom: 2rem;
             position: relative;
         }
@@ -452,16 +476,17 @@
         }
 
         .service-title {
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--dark);
+            line-height: 1.3;
         }
 
         .service-description {
             color: var(--gray);
             line-height: 1.7;
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
             margin-bottom: 2rem;
         }
 
@@ -476,28 +501,30 @@
             margin-bottom: 0.75rem;
             color: var(--gray);
             font-weight: 500;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
         }
 
         .service-features i {
             color: var(--success);
             font-size: 1rem;
+            flex-shrink: 0;
         }
 
         /* Why Choose Us */
         .why-choose {
-            padding: 120px 2rem;
+            padding: clamp(80px, 15vh, 120px) clamp(1rem, 5vw, 2rem);
             background: var(--white);
         }
 
         .why-choose-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5rem;
+            gap: clamp(3rem, 8vw, 5rem);
             align-items: center;
         }
 
         .why-choose-text h2 {
-            font-size: 3rem;
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 800;
             margin-bottom: 2rem;
             background: var(--gradient);
@@ -508,7 +535,7 @@
         }
 
         .why-choose-description {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             color: var(--gray);
             line-height: 1.7;
             margin-bottom: 2.5rem;
@@ -523,7 +550,7 @@
             align-items: flex-start;
             gap: 1rem;
             margin-bottom: 1.5rem;
-            padding: 1rem;
+            padding: clamp(0.75rem, 3vw, 1rem);
             background: var(--gradient-light);
             border-radius: 16px;
             border: 1px solid rgba(99, 102, 241, 0.1);
@@ -537,19 +564,22 @@
 
         .features-list i {
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
             margin-top: 0.25rem;
+            flex-shrink: 0;
         }
 
         .feature-content h4 {
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: var(--dark);
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
         }
 
         .feature-content p {
             color: var(--gray);
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            line-height: 1.5;
         }
 
         .why-choose-image {
@@ -559,11 +589,11 @@
         .image-placeholder {
             background: var(--gradient);
             border-radius: 24px;
-            height: 500px;
+            height: clamp(300px, 50vh, 500px);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
+            font-size: clamp(3rem, 8vw, 5rem);
             color: var(--white);
             position: relative;
             overflow: hidden;
@@ -576,10 +606,11 @@
         .floating-card {
             position: absolute;
             background: var(--white);
-            padding: 1.5rem;
+            padding: clamp(1rem, 3vw, 1.5rem);
             border-radius: 16px;
             box-shadow: var(--shadow-lg);
             animation: float 6s ease-in-out infinite;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
         }
 
         .floating-card-1 {
@@ -602,20 +633,20 @@
 
         /* Testimonials */
         .testimonials {
-            padding: 120px 2rem;
+            padding: clamp(80px, 15vh, 120px) clamp(1rem, 5vw, 2rem);
             background: var(--light-gray);
         }
 
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: clamp(1.5rem, 4vw, 2.5rem);
             margin-top: 4rem;
         }
 
         .testimonial-card {
             background: var(--white);
-            padding: 2.5rem;
+            padding: clamp(1.5rem, 4vw, 2.5rem);
             border-radius: 24px;
             box-shadow: var(--shadow);
             position: relative;
@@ -628,7 +659,7 @@
         }
 
         .testimonial-quote {
-            font-size: 1.1rem;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
             line-height: 1.7;
             color: var(--gray);
             margin-bottom: 2rem;
@@ -642,8 +673,8 @@
         }
 
         .author-avatar {
-            width: 60px;
-            height: 60px;
+            width: clamp(50px, 12vw, 60px);
+            height: clamp(50px, 12vw, 60px);
             background: var(--gradient);
             border-radius: 50%;
             display: flex;
@@ -651,29 +682,31 @@
             justify-content: center;
             color: var(--white);
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            flex-shrink: 0;
         }
 
         .author-info h4 {
             font-weight: 600;
             margin-bottom: 0.25rem;
             color: var(--dark);
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
         }
 
         .author-info p {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
         }
 
         .stars {
-            color: var(--accent);
+            color: var(--warning);
             margin-bottom: 1rem;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
         }
 
         /* CTA Section */
         .cta-section {
-            padding: 120px 2rem;
+            padding: clamp(80px, 15vh, 120px) clamp(1rem, 5vw, 2rem);
             background: var(--gradient);
             color: var(--white);
             text-align: center;
@@ -699,28 +732,29 @@
         }
 
         .cta-section h2 {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
             font-weight: 900;
             margin-bottom: 1.5rem;
             line-height: 1.1;
         }
 
         .cta-section p {
-            font-size: 1.375rem;
+            font-size: clamp(1.1rem, 3vw, 1.375rem);
             margin-bottom: 3rem;
             opacity: 0.9;
+            line-height: 1.6;
         }
 
         /* Contact Form */
         .contact {
-            padding: 120px 2rem;
+            padding: clamp(80px, 15vh, 120px) clamp(1rem, 5vw, 2rem);
             background: var(--white);
         }
 
         .contact-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 5rem;
+            gap: clamp(3rem, 8vw, 5rem);
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -728,7 +762,7 @@
         .contact-info {
             background: var(--gradient);
             color: var(--white);
-            padding: 4rem 3rem;
+            padding: clamp(2.5rem, 6vw, 4rem) clamp(2rem, 5vw, 3rem);
             border-radius: 24px;
             position: relative;
             overflow: hidden;
@@ -750,7 +784,7 @@
         }
 
         .contact-info h3 {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: 700;
             margin-bottom: 2rem;
         }
@@ -763,36 +797,38 @@
         }
 
         .contact-item-icon {
-            width: 50px;
-            height: 50px;
+            width: clamp(40px, 10vw, 50px);
+            height: clamp(40px, 10vw, 50px);
             background: rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
             flex-shrink: 0;
         }
 
         .contact-item-info h4 {
             font-weight: 600;
             margin-bottom: 0.5rem;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
         }
 
         .contact-item-info p {
             opacity: 0.9;
             line-height: 1.5;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
         }
 
         .contact-form {
             background: var(--light-gray);
-            padding: 4rem 3rem;
+            padding: clamp(2.5rem, 6vw, 4rem) clamp(2rem, 5vw, 3rem);
             border-radius: 24px;
             box-shadow: var(--shadow);
         }
 
         .contact-form h3 {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: 700;
             margin-bottom: 2rem;
             color: var(--dark);
@@ -807,15 +843,15 @@
             margin-bottom: 0.75rem;
             font-weight: 600;
             color: var(--dark);
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
 
         .form-control {
             width: 100%;
-            padding: 1.25rem 1.5rem;
+            padding: clamp(1rem, 3vw, 1.25rem) clamp(1rem, 3vw, 1.5rem);
             border: 2px solid rgba(99, 102, 241, 0.1);
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
             font-family: inherit;
             transition: all 0.3s ease;
             background: var(--white);
@@ -837,10 +873,10 @@
             background: var(--gradient);
             color: var(--white);
             width: 100%;
-            padding: 1.25rem;
+            padding: clamp(1rem, 3vw, 1.25rem);
             border: none;
             border-radius: 12px;
-            font-size: 1.125rem;
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -866,7 +902,7 @@
 
         .submit-btn:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-xl);
+            box-shadow: var(--shadow-glow);
         }
 
         .submit-btn:disabled {
@@ -879,28 +915,29 @@
         .footer {
             background: var(--dark);
             color: var(--white);
-            padding: 4rem 2rem 2rem;
+            padding: clamp(3rem, 8vh, 4rem) clamp(1rem, 5vw, 2rem) clamp(1.5rem, 4vh, 2rem);
         }
 
         .footer-content {
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(2rem, 5vw, 3rem);
+            margin-bottom: clamp(2rem, 5vh, 3rem);
         }
 
         .footer-section h3 {
             margin-bottom: 1.5rem;
             font-weight: 700;
-            font-size: 1.25rem;
+            font-size: clamp(1.1rem, 2.5vw, 1.25rem);
         }
 
         .footer-section p {
             color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
             margin-bottom: 1.5rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
 
         .footer-section a {
@@ -909,6 +946,7 @@
             margin-bottom: 0.75rem;
             display: block;
             transition: all 0.3s ease;
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
 
         .footer-section a:hover {
@@ -920,43 +958,49 @@
             display: flex;
             gap: 1rem;
             margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .social-links a {
-            width: 50px;
-            height: 50px;
+            width: clamp(45px, 10vw, 50px);
+            height: clamp(45px, 10vw, 50px);
             background: var(--gradient);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            font-size: 1.25rem;
+            font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+            margin-bottom: 0;
         }
 
         .social-links a:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-glow);
         }
 
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
+            padding-top: clamp(1.5rem, 4vh, 2rem);
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: rgba(255, 255, 255, 0.6);
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .footer-links {
             display: flex;
-            gap: 2rem;
+            gap: clamp(1rem, 3vw, 2rem);
+            flex-wrap: wrap;
         }
 
         .footer-links a {
             color: rgba(255, 255, 255, 0.6);
             text-decoration: none;
             transition: color 0.3s ease;
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
         }
 
         .footer-links a:hover {
@@ -967,6 +1011,11 @@
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -30px) scale(1.1); }
         }
 
         /* Loading Animation */
@@ -987,9 +1036,10 @@
         /* Message Styles */
         .message {
             margin-top: 1.5rem;
-            padding: 1.25rem;
+            padding: clamp(1rem, 3vw, 1.25rem);
             border-radius: 12px;
             font-weight: 500;
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
 
         .message.success {
@@ -1006,30 +1056,14 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .nav-links {
-                gap: 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-            }
-
-            .services-grid {
-                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            }
-
             .why-choose-content,
             .contact-content {
                 grid-template-columns: 1fr;
-                gap: 3rem;
+                gap: clamp(2rem, 5vh, 3rem);
             }
 
-            .footer-content {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            .hero::after {
+                display: none;
             }
         }
 
@@ -1046,6 +1080,7 @@
                 padding: 2rem;
                 gap: 1rem;
                 box-shadow: var(--shadow-lg);
+                border-radius: 0 0 20px 20px;
             }
 
             .nav-links.active {
@@ -1060,18 +1095,6 @@
                 position: relative;
             }
 
-            .hero {
-                padding: 120px 1rem 80px;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.125rem;
-            }
-
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
@@ -1083,88 +1106,27 @@
                 justify-content: center;
             }
 
-            .hero-stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+            .floating-card {
+                display: none;
             }
 
-            .services,
-            .why-choose,
-            .testimonials,
-            .cta-section,
-            .contact {
-                padding: 80px 1rem;
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .services-grid {
                 grid-template-columns: 1fr;
             }
 
-            .service-card {
-                padding: 2rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .cta-section h2 {
-                font-size: 2.5rem;
-            }
-
             .testimonials-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .contact-form,
-            .contact-info {
-                padding: 2.5rem 2rem;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .footer-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .section-title {
-                font-size: 1.75rem;
-            }
-
-            .why-choose-text h2 {
-                font-size: 2rem;
-            }
-
-            .cta-section h2 {
-                font-size: 2rem;
-            }
-
-            .hero-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .stat {
-                padding: 1rem;
-            }
-
-            .service-card {
-                padding: 1.5rem;
-            }
-
-            .contact-form,
-            .contact-info {
-                padding: 2rem 1.5rem;
             }
         }
 
@@ -1188,7 +1150,27 @@
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
+            background: var(--gradient-dark);
+        }
+
+        /* Additional Modern Styles */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4), 0 0 40px rgba(6, 214, 160, 0.3);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
     </style>
 </head>
@@ -1198,7 +1180,7 @@
         <nav class="nav">
             <a href="#" class="logo">
                 <i class="fas fa-rocket"></i>
-                SRG Plus (Scan Rank and Grow)
+                SRG Plus
             </a>
             
             <ul class="nav-links" id="navLinks">
@@ -1227,39 +1209,39 @@
                 Transform Bharat to Digital India
             </div>
             
-            <h1>Digital Marketing Automation Platform</h1>
+            <h1>Digital Marketing & App Development Platform</h1>
             <p class="hero-subtitle">
-                Streamline your customer engagement across WhatsApp, Instagram, Facebook, and more. 
-                Boost your local presence with Google Business Profile optimization and automated customer interactions.
+                Complete digital transformation solution featuring mobile app development, responsive websites, 
+                WhatsApp automation, Instagram & Facebook marketing, and advanced GMB optimization for modern businesses.
             </p>
             
             <div class="hero-buttons">
                 <a href="#services" class="btn btn-primary">
                     <i class="fas fa-play"></i>
-                    Explore Services
+                    Explore Solutions
                 </a>
                 <a href="#contact" class="btn btn-outline">
                     <i class="fas fa-phone-alt"></i>
-                    Get Free Demo
+                    Free Consultation
                 </a>
             </div>
             
             <div class="hero-stats">
                 <div class="stat">
-                    <div class="stat-number">10K+</div>
+                    <div class="stat-number">15K+</div>
                     <div class="stat-label">Happy Clients</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-number">50K+</div>
-                    <div class="stat-label">Messages Automated</div>
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Apps Developed</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-number">99%</div>
-                    <div class="stat-label">Customer Satisfaction</div>
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Websites Built</div>
                 </div>
                 <div class="stat">
                     <div class="stat-number">24/7</div>
-                    <div class="stat-label">Support Available</div>
+                    <div class="stat-label">Expert Support</div>
                 </div>
             </div>
         </div>
@@ -1273,74 +1255,58 @@
                     <i class="fas fa-cog"></i>
                     Our Services
                 </div>
-                <h2 class="section-title">Complete Digital Solutions</h2>
+                <h2 class="section-title">Complete Digital Ecosystem</h2>
                 <p class="section-subtitle">
-                    Everything you need to succeed in the digital world - from automation to optimization
+                    From mobile apps to marketing automation - everything you need for digital success
                 </p>
             </div>
             
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fab fa-google"></i>
+                        <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3 class="service-title">Google Business Profile Optimization</h3>
+                    <h3 class="service-title">Mobile App Development</h3>
                     <p class="service-description">
-                        Optimize your local presence and attract more customers through enhanced Google Business Profile management and local SEO strategies.
+                        Create powerful iOS and Android apps with modern UI/UX, real-time features, and seamless performance that engages your customers.
                     </p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Local SEO optimization</li>
-                        <li><i class="fas fa-check"></i> Review management</li>
-                        <li><i class="fas fa-check"></i> Business listing enhancement</li>
-                        <li><i class="fas fa-check"></i> Local search ranking</li>
+                        <li><i class="fas fa-check"></i> Native & Cross-platform apps</li>
+                        <li><i class="fas fa-check"></i> E-commerce integration</li>
+                        <li><i class="fas fa-check"></i> Push notifications</li>
+                        <li><i class="fas fa-check"></i> App Store optimization</li>
                     </ul>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-globe"></i>
                     </div>
-                    <h3 class="service-title">Responsive Website Development</h3>
+                    <h3 class="service-title">Modern Website Development</h3>
                     <p class="service-description">
-                        Create stunning, responsive websites that convert visitors into customers with modern design and powerful functionality.
+                        Build stunning, responsive websites with cutting-edge design, lightning-fast performance, and conversion-focused features.
                     </p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Mobile-first design</li>
-                        <li><i class="fas fa-check"></i> SEO optimized</li>
-                        <li><i class="fas fa-check"></i> Fast loading speed</li>
-                        <li><i class="fas fa-check"></i> E-commerce integration</li>
+                        <li><i class="fas fa-check"></i> Progressive Web Apps (PWA)</li>
+                        <li><i class="fas fa-check"></i> Advanced SEO optimization</li>
+                        <li><i class="fas fa-check"></i> CMS integration</li>
+                        <li><i class="fas fa-check"></i> Security & SSL certification</li>
                     </ul>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-share-alt"></i>
+                        <i class="fab fa-google"></i>
                     </div>
-                    <h3 class="service-title">Social Media Management</h3>
+                    <h3 class="service-title">Google Business Profile Mastery</h3>
                     <p class="service-description">
-                        Maximize your social media presence and engagement across all platforms with automated posting and community management.
+                        Dominate local search results and attract more customers with comprehensive GMB optimization and local SEO strategies.
                     </p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Content planning & scheduling</li>
-                        <li><i class="fas fa-check"></i> Multi-platform management</li>
-                        <li><i class="fas fa-check"></i> Engagement tracking</li>
-                        <li><i class="fas fa-check"></i> Performance analytics</li>
-                    </ul>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3 class="service-title">Lead Generation</h3>
-                    <p class="service-description">
-                        Generate qualified leads that convert into paying customers through targeted campaigns and automation.
-                    </p>
-                    <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Targeted advertising</li>
-                        <li><i class="fas fa-check"></i> Landing page optimization</li>
-                        <li><i class="fas fa-check"></i> Email marketing campaigns</li>
-                        <li><i class="fas fa-check"></i> Lead nurturing automation</li>
+                        <li><i class="fas fa-check"></i> Local SEO ranking</li>
+                        <li><i class="fas fa-check"></i> Review management system</li>
+                        <li><i class="fas fa-check"></i> Business insights & analytics</li>
+                        <li><i class="fas fa-check"></i> Google Ads integration</li>
                     </ul>
                 </div>
                 
@@ -1348,31 +1314,47 @@
                     <div class="service-icon">
                         <i class="fab fa-whatsapp"></i>
                     </div>
-                    <h3 class="service-title">WhatsApp & Multi-Channel Automation</h3>
+                    <h3 class="service-title">WhatsApp Business Automation</h3>
                     <p class="service-description">
-                        Automate customer interactions across WhatsApp, Facebook, Instagram, and more for 24/7 customer service.
+                        Automate customer conversations with intelligent WhatsApp chatbots, bulk messaging, and multi-agent support systems.
                     </p>
                     <ul class="service-features">
                         <li><i class="fas fa-check"></i> WhatsApp Business API</li>
-                        <li><i class="fas fa-check"></i> Chatbot integration</li>
-                        <li><i class="fas fa-check"></i> Multi-channel messaging</li>
-                        <li><i class="fas fa-check"></i> Automated responses</li>
+                        <li><i class="fas fa-check"></i> AI-powered chatbots</li>
+                        <li><i class="fas fa-check"></i> Bulk messaging campaigns</li>
+                        <li><i class="fas fa-check"></i> Customer support automation</li>
                     </ul>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-map-marker-alt"></i>
+                        <i class="fas fa-share-alt"></i>
                     </div>
-                    <h3 class="service-title">Local SEO Domination</h3>
+                    <h3 class="service-title">Social Media Automation</h3>
                     <p class="service-description">
-                        Dominate local search results and attract customers in your area with advanced local SEO strategies.
+                        Maximize engagement across Instagram, Facebook, LinkedIn, and Twitter with automated posting and community management.
                     </p>
                     <ul class="service-features">
-                        <li><i class="fas fa-check"></i> Local keyword optimization</li>
-                        <li><i class="fas fa-check"></i> Citation building</li>
-                        <li><i class="fas fa-check"></i> Local content strategy</li>
-                        <li><i class="fas fa-check"></i> Google My Business optimization</li>
+                        <li><i class="fas fa-check"></i> Multi-platform scheduling</li>
+                        <li><i class="fas fa-check"></i> Content creation & curation</li>
+                        <li><i class="fas fa-check"></i> Engagement analytics</li>
+                        <li><i class="fas fa-check"></i> Influencer outreach</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="service-title">Digital Marketing & Lead Gen</h3>
+                    <p class="service-description">
+                        Generate high-quality leads with targeted advertising, email marketing, and conversion optimization strategies.
+                    </p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Google & Facebook Ads</li>
+                        <li><i class="fas fa-check"></i> Email marketing automation</li>
+                        <li><i class="fas fa-check"></i> Landing page optimization</li>
+                        <li><i class="fas fa-check"></i> CRM integration</li>
                     </ul>
                 </div>
             </div>
@@ -1386,41 +1368,40 @@
                 <div class="why-choose-text">
                     <div class="section-badge">
                         <i class="fas fa-award"></i>
-                        Why Choose Us
+                        Why Choose SRG Plus
                     </div>
-                    <h2>Seamlessly Connect with Tools You Already Use</h2>
+                    <h2>India's Most Trusted Digital Transformation Partner</h2>
                     <p class="why-choose-description">
-                        SRG Plus (Scan Rank and Grow) integrates with your existing business tools and platforms, making it easy to implement 
-                        our solutions without disrupting your workflow.
+                        We combine cutting-edge technology with deep market understanding to deliver solutions that drive real business growth and customer engagement.
                     </p>
                     
                     <ul class="features-list">
                         <li>
-                            <i class="fas fa-bolt"></i>
+                            <i class="fas fa-rocket"></i>
                             <div class="feature-content">
-                                <h4>Lightning Fast Setup</h4>
-                                <p>Get started in minutes, not hours. Our platform is designed for quick implementation.</p>
+                                <h4>Lightning Fast Deployment</h4>
+                                <p>Launch your digital presence in days, not months with our streamlined development process.</p>
                             </div>
                         </li>
                         <li>
                             <i class="fas fa-shield-alt"></i>
                             <div class="feature-content">
-                                <h4>Enterprise Security</h4>
-                                <p>Your data is protected with bank-level encryption and security measures.</p>
+                                <h4>Enterprise-Grade Security</h4>
+                                <p>Bank-level encryption and security protocols protect your business and customer data.</p>
                             </div>
                         </li>
                         <li>
-                            <i class="fas fa-headset"></i>
+                            <i class="fas fa-users"></i>
                             <div class="feature-content">
-                                <h4>24/7 Expert Support</h4>
-                                <p>Our team is always available to help you succeed with dedicated support.</p>
+                                <h4>Dedicated Success Team</h4>
+                                <p>Personal account managers and technical experts ensure your continuous success.</p>
                             </div>
                         </li>
                         <li>
                             <i class="fas fa-chart-line"></i>
                             <div class="feature-content">
-                                <h4>Real-time Analytics</h4>
-                                <p>Track your performance with detailed insights and actionable data.</p>
+                                <h4>AI-Powered Analytics</h4>
+                                <p>Get actionable insights with advanced analytics and machine learning capabilities.</p>
                             </div>
                         </li>
                     </ul>
@@ -1428,24 +1409,24 @@
                 
                 <div class="why-choose-image">
                     <div class="image-placeholder">
-                        <i class="fas fa-rocket"></i>
+                        <i class="fas fa-mobile-alt"></i>
                         <div class="floating-cards">
                             <div class="floating-card floating-card-1">
                                 <div style="display: flex; align-items: center; gap: 0.5rem;">
                                     <i class="fas fa-check-circle" style="color: var(--success);"></i>
-                                    <span style="font-weight: 600;">99% Uptime</span>
+                                    <span style="font-weight: 600;">99.9% Uptime</span>
                                 </div>
                             </div>
                             <div class="floating-card floating-card-2">
                                 <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-users" style="color: var(--primary);"></i>
-                                    <span style="font-weight: 600;">10K+ Clients</span>
+                                    <i class="fas fa-mobile" style="color: var(--primary);"></i>
+                                    <span style="font-weight: 600;">200+ Apps Built</span>
                                 </div>
                             </div>
                             <div class="floating-card floating-card-3">
                                 <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fas fa-star" style="color: var(--accent);"></i>
-                                    <span style="font-weight: 600;">5★ Rating</span>
+                                    <i class="fas fa-star" style="color: var(--warning);"></i>
+                                    <span style="font-weight: 600;">4.9★ Rating</span>
                                 </div>
                             </div>
                         </div>
@@ -1461,11 +1442,11 @@
             <div class="section-header">
                 <div class="section-badge">
                     <i class="fas fa-quote-left"></i>
-                    Testimonials
+                    Success Stories
                 </div>
                 <h2 class="section-title">What Our Clients Say</h2>
                 <p class="section-subtitle">
-                    Don't just take our word for it - hear from businesses that have transformed their digital presence
+                    Real businesses, real results - discover how we've transformed digital presence across India
                 </p>
             </div>
             
@@ -1479,14 +1460,13 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <p class="testimonial-quote">
-                        "The customer service automation has made it so much easier to manage our inquiries. 
-                        It's like having a team of agents working 24/7. Our response time improved by 90%!"
+                        "Their mobile app development exceeded our expectations! Customer engagement increased by 300% and our sales have doubled since launch. The WhatsApp automation is a game-changer."
                     </p>
                     <div class="testimonial-author">
                         <div class="author-avatar">RS</div>
                         <div class="author-info">
                             <h4>Rajesh Sharma</h4>
-                            <p>CEO, Local Restaurant Chain</p>
+                            <p>CEO, FreshMart Chain</p>
                         </div>
                     </div>
                 </div>
@@ -1500,14 +1480,13 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <p class="testimonial-quote">
-                        "SRG Plus transformed our online presence completely. Our Google reviews increased by 200% 
-                        and foot traffic to our store has doubled. Incredible results!"
+                        "The website they built is absolutely stunning and mobile-perfect. Our online orders increased 250% and Google ranking improved dramatically. Best investment we've made!"
                     </p>
                     <div class="testimonial-author">
                         <div class="author-avatar">PK</div>
                         <div class="author-info">
                             <h4>Priya Kumari</h4>
-                            <p>Owner, Fashion Boutique</p>
+                            <p>Owner, StyleHub Boutique</p>
                         </div>
                     </div>
                 </div>
@@ -1521,14 +1500,13 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <p class="testimonial-quote">
-                        "The WhatsApp automation feature is a game-changer. We can now handle customer queries 
-                        instantly, even when we're closed. Sales have increased by 150%!"
+                        "SRG Plus transformed our entire digital presence. The app, website, and social media automation work seamlessly together. Customer satisfaction is at an all-time high!"
                     </p>
                     <div class="testimonial-author">
                         <div class="author-avatar">AM</div>
                         <div class="author-info">
                             <h4>Amit Mehta</h4>
-                            <p>Director, Electronics Store</p>
+                            <p>Director, TechZone Electronics</p>
                         </div>
                     </div>
                 </div>
@@ -1539,19 +1517,19 @@
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="cta-content">
-            <h2>Transform Your Business with Seamless Multi-Channel Automation</h2>
+            <h2>Ready to Transform Your Business Digital Presence?</h2>
             <p>
-                Join thousands of businesses already using SRG Plus (Scan Rank and Grow) to automate their customer engagement 
-                and boost their online presence. Get started today!
+                Join 15,000+ successful businesses using SRG Plus for complete digital transformation. 
+                Get mobile apps, websites, and marketing automation all in one platform.
             </p>
             <div class="hero-buttons">
                 <a href="#contact" class="btn btn-primary">
                     <i class="fas fa-rocket"></i>
-                    Start Free Trial
+                    Start Your Journey
                 </a>
                 <a href="#services" class="btn btn-outline">
                     <i class="fas fa-info-circle"></i>
-                    Learn More
+                    View All Services
                 </a>
             </div>
         </div>
@@ -1563,20 +1541,20 @@
             <div class="section-header">
                 <div class="section-badge">
                     <i class="fas fa-envelope"></i>
-                    Get In Touch
+                    Get Started Today
                 </div>
-                <h2 class="section-title">Ready to Transform Your Business?</h2>
+                <h2 class="section-title">Let's Build Something Amazing Together</h2>
                 <p class="section-subtitle">
-                    Let's discuss how SRG Plus (Scan Rank and Grow) can help you automate your customer engagement and grow your business
+                    Ready to transform your business? Our expert team is here to guide you through every step of your digital journey.
                 </p>
             </div>
             
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="contact-info-content">
-                        <h3>Let's Start a Conversation</h3>
+                        <h3>Let's Start Your Digital Transformation</h3>
                         <p style="margin-bottom: 3rem; opacity: 0.9; font-size: 1.1rem;">
-                            Ready to take your business to the next level? We're here to help you succeed.
+                            From concept to launch, we're with you every step of the way. Get a free consultation today!
                         </p>
                         
                         <div class="contact-item">
@@ -1584,7 +1562,7 @@
                                 <i class="fas fa-phone"></i>
                             </div>
                             <div class="contact-item-info">
-                                <h4>Call Us</h4>
+                                <h4>Call Our Experts</h4>
                                 <p>+91 98765 43210<br>+91 87654 32109</p>
                             </div>
                         </div>
@@ -1604,8 +1582,8 @@
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div class="contact-item-info">
-                                <h4>Visit Us</h4>
-                                <p>Digital Marketing Hub<br>Tech City, India<br>Pincode: 110001</p>
+                                <h4>Visit Our Office</h4>
+                                <p>Digital Innovation Hub<br>Tech City, New Delhi<br>India - 110001</p>
                             </div>
                         </div>
                         
@@ -1615,14 +1593,14 @@
                             </div>
                             <div class="contact-item-info">
                                 <h4>Business Hours</h4>
-                                <p>Monday - Saturday: 9:00 AM - 7:00 PM<br>Sunday: 10:00 AM - 5:00 PM</p>
+                                <p>Monday - Saturday: 9:00 AM - 8:00 PM<br>Sunday: 10:00 AM - 6:00 PM</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <form class="contact-form" id="contactForm">
-                    <h3>Send us a Message</h3>
+                    <h3>Get Free Consultation</h3>
                     
                     <div class="form-group">
                         <label for="name">Full Name *</label>
@@ -1640,321 +1618,22 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="business">Business Type</label>
-                        <input type="text" id="business" name="business" class="form-control" placeholder="e.g. Restaurant, Retail Store, Service">
+                        <label for="service">Service Interest</label>
+                        <select id="service" name="service" class="form-control">
+                            <option value="">Select a service</option>
+                            <option value="app-development">Mobile App Development</option>
+                            <option value="website-development">Website Development</option>
+                            <option value="whatsapp-automation">WhatsApp Automation</option>
+                            <option value="social-media">Social Media Marketing</option>
+                            <option value="gmb-optimization">GMB Optimization</option>
+                            <option value="complete-package">Complete Digital Package</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="message">How can we help you? *</label>
-                        <textarea id="message" name="message" class="form-control textarea" required placeholder="Tell us about your business goals and challenges..."></textarea>
+                        <label for="message">Project Details *</label>
+                        <textarea id="message" name="message" class="form-control textarea" required placeholder="Tell us about your business, goals, and how we can help you succeed..."></textarea>
                     </div>
                     
                     <button type="submit" class="submit-btn" id="submitBtn">
-                        <span id="submitText">Send Message</span>
-                    </button>
-                    
-                    <div id="messageContainer"></div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>SRG Plus (Scan Rank and Grow)</h3>
-                <p>Transform Bharat to Digital India with our comprehensive digital marketing automation platform. Helping businesses succeed online since 2020.</p>
-                
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Services</h3>
-                <a href="#services">Google Business Profile</a>
-                <a href="#services">Website Development</a>
-                <a href="#services">Social Media Management</a>
-                <a href="#services">Lead Generation</a>
-                <a href="#services">WhatsApp Automation</a>
-                <a href="#services">Local SEO</a>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Company</h3>
-                <a href="#why-choose">About Us</a>
-                <a href="#testimonials">Success Stories</a>
-                <a href="#">Pricing</a>
-                <a href="#">Blog</a>
-                <a href="#">Careers</a>
-                <a href="#contact">Contact</a>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Support</h3>
-                <a href="#">Help Center</a>
-                <a href="#">Documentation</a>
-                <a href="#">API Reference</a>
-                <a href="#">Status Page</a>
-                <a href="#">Community</a>
-                <a href="#">Training</a>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2024 SRG Plus (Scan Rank and Grow). All rights reserved. | Proudly Made in India</p>
-            <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Cookie Policy</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Mobile menu toggle
-        document.getElementById('mobileToggle').addEventListener('click', function() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-            
-            // Animate hamburger menu
-            const spans = this.querySelectorAll('span');
-            spans.forEach((span, index) => {
-                span.style.transform = navLinks.classList.contains('active') 
-                    ? `rotate(${index === 0 ? '45deg' : index === 1 ? '0deg' : '-45deg'})`
-                    : 'rotate(0deg)';
-                span.style.opacity = navLinks.classList.contains('active') && index === 1 ? '0' : '1';
-            });
-        });
-
-        // Close mobile menu when clicking on links
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('active');
-                const spans = document.getElementById('mobileToggle').querySelectorAll('span');
-                spans.forEach(span => {
-                    span.style.transform = 'rotate(0deg)';
-                    span.style.opacity = '1';
-                });
-            });
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Contact form handling
-        document.getElementById('contactForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            const messageContainer = document.getElementById('messageContainer');
-            
-            // Get form data
-            const formData = {
-                name: document.getElementById('name').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                phone: document.getElementById('phone').value.trim(),
-                business: document.getElementById('business').value.trim(),
-                message: document.getElementById('message').value.trim()
-            };
-            
-            // Validation
-            if (!formData.name || formData.name.length < 2) {
-                showMessage('Please enter a valid name (minimum 2 characters)', 'error');
-                return;
-            }
-            
-            if (!formData.email || !isValidEmail(formData.email)) {
-                showMessage('Please enter a valid email address', 'error');
-                return;
-            }
-            
-            if (!formData.phone || formData.phone.length < 10) {
-                showMessage('Please enter a valid phone number', 'error');
-                return;
-            }
-            
-            if (!formData.message || formData.message.length < 10) {
-                showMessage('Please enter a message (minimum 10 characters)', 'error');
-                return;
-            }
-            
-            try {
-                // Show loading state
-                submitBtn.disabled = true;
-                submitText.innerHTML = '<div class="loading"></div>Sending...';
-                
-                // Simulate API call - Replace with your actual endpoint
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // Simulate success response
-                const success = Math.random() > 0.1; // 90% success rate for demo
-                
-                if (success) {
-                    showMessage('Message sent successfully! We\'ll get back to you within 24 hours. 🚀', 'success');
-                    document.getElementById('contactForm').reset();
-                } else {
-                    throw new Error('Failed to send message');
-                }
-                
-            } catch (error) {
-                showMessage('Error sending message. Please try again or call us directly at +91 98765 43210', 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitText.textContent = 'Send Message';
-            }
-        });
-        
-        function showMessage(message, type) {
-            const messageContainer = document.getElementById('messageContainer');
-            messageContainer.innerHTML = `<div class="message ${type}">${message}</div>`;
-            
-            // Auto-hide success messages after 5 seconds
-            if (type === 'success') {
-                setTimeout(() => {
-                    messageContainer.innerHTML = '';
-                }, 5000);
-            }
-        }
-        
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                    entry.target.classList.add('animate-in');
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animation
-        document.querySelectorAll('.service-card, .testimonial-card, .stat, .features-list li').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-
-        // Add stagger effect to service cards
-        document.querySelectorAll('.service-card').forEach((card, index) => {
-            card.style.transitionDelay = `${index * 0.1}s`;
-        });
-
-        // Add stagger effect to testimonial cards
-        document.querySelectorAll('.testimonial-card').forEach((card, index) => {
-            card.style.transitionDelay = `${index * 0.2}s`;
-        });
-
-        // Stats counter animation
-        function animateCounter(element, target) {
-            const increment = target / 100;
-            let current = 0;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current) + (target >= 1000 ? 'K+' : target >= 100 ? '%' : target === 24 ? '/7' : '+');
-            }, 20);
-        }
-
-        // Trigger counter animation when stats come into view
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statNumbers = entry.target.querySelectorAll('.stat-number');
-                    statNumbers.forEach(stat => {
-                        const text = stat.textContent;
-                        let target;
-                        if (text.includes('K+')) {
-                            target = parseInt(text) * 1000;
-                        } else if (text.includes('%')) {
-                            target = parseInt(text);
-                        } else if (text.includes('/7')) {
-                            target = 24;
-                        } else {
-                            target = parseInt(text);
-                        }
-                        stat.textContent = '0';
-                        animateCounter(stat, target);
-                    });
-                    statsObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.hero-stats').forEach(stats => {
-            statsObserver.observe(stats);
-        });
-
-        // Parallax effect for hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        });
-
-        // Add loading class to buttons on click
-        document.querySelectorAll('.btn, .cta-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                if (!this.getAttribute('href').startsWith('#')) return;
-                
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-        });
-
-        // Smooth page reveal on load
-        window.addEventListener('load', () => {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-    </script>
-</body>
-</html>
+                        <span id="submitText">Get Free Consultation
